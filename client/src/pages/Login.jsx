@@ -23,7 +23,7 @@ const Login = () => {
     }
   };
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 bg-blue-100">
       <form onSubmit={ handleSubmit} className="max-w-sm mx-auto">
         <h2 className="text-xl font-bold mb-4">Login</h2>
         {error && <div className="mb-4 text-red-500">{error}</div>} {/* Display error message */}
