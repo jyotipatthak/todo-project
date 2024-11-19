@@ -20,7 +20,7 @@ const Navbar = () => {
         {user ? (
           <>
             <button
-              className="px-4 py-2 bg-white text-blue-500 rounded hover:bg-blue-100"
+              className="px-4 py-2 bg-white text-blue-500 rounded-full hover:bg-blue-100"
               onClick={handleLogout}
             >
               Logout
@@ -30,13 +30,13 @@ const Navbar = () => {
           <>
             <Link
               to="/login"
-              className="px-4 py-2 bg-white text-blue-500 rounded hover:bg-blue-100"
+              className="px-4 py-2 bg-white text-blue-500 rounded-full hover:bg-blue-100"
             >
               Login
             </Link>
             <Link
               to="/register"
-              className="ml-4 px-4 py-2 bg-white text-blue-500 rounded hover:bg-blue-100"
+              className="ml-4 px-4 py-2 bg-white text-blue-500 rounded-full hover:bg-blue-100"
             >
               Register
             </Link>
