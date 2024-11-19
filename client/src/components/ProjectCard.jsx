@@ -2,27 +2,23 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ProjectCard = ({ project }) => {
-  // Calculate the number of completed todos and total todos
-  const completedTodos = project.todos.filter(todo => todo.completed).length;
+  const completedTodos = project.todos.filter((todo) => todo.completed).length;
   const totalTodos = project.todos.length;
-
-  // Format the created date (optional, you can format it as you like)
   const createdDate = new Date(project.createdAt);
   const formattedDate = createdDate.toLocaleDateString();
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4">
-      <h3 className="font-bold">{project.title}</h3>
-      <p className="text-sm text-gray-600">Created on: {formattedDate}</p>
-
-      <div className="mt-2">
-        <p className="text-sm">
-          {completedTodos} / {totalTodos} Todos Completed
-        </p>
-      </div>
-
-      <div className="mt-4">
-        <Link to={`/projects/${project._id}`} className="text-blue-500">
+    <div className="bg-blue-100 shadow-md rounded-xl p-6 hover:shadow-lg transition-transform transform hover:scale-105">
+      <h3 className="text-xl font-bold text-gray-800 mb-2">{project.title}</h3>
+      <p className="text-sm text-gray-500 mb-4">Created on: {formattedDate}</p>
+      <p className="text-sm text-gray-600 mb-6">
+        <span className="font-semibold text-green-600">{completedTodos}</span> / {totalTodos} Todos Completed
+      </p>
+      <div className="flex justify-center">
+        <Link
+          to={`/projects/${project._id}`}
+          className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition"
+        >
           View Project
         </Link>
       </div>

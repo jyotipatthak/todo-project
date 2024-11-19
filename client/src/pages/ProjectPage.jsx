@@ -1,18 +1,16 @@
-import { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { createProject, getProjects } from "../utils/api";
 import ProjectCard from "../components/ProjectCard";
 
 const ProjectPage = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [projects, setProjects] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
-  // Fetch projects when the component mounts or when the user changes
   useEffect(() => {
     const fetchProjects = async () => {
       if (!user) {
@@ -30,17 +28,12 @@ const ProjectPage = () => {
     fetchProjects();
   }, [user]);
 
-  // Handle project creation
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const projectData = { title, description };
       const newProject = await createProject(projectData, user.token);
-
-      // Add the new project to the state
       setProjects((prevProjects) => [newProject, ...prevProjects]);
-
-      // Clear the form fields
       setTitle("");
       setDescription("");
     } catch (err) {
@@ -49,55 +42,60 @@ const ProjectPage = () => {
   };
 
   return (
-    <div className="bg-blue-50 min-h-screen flex flex-col items-center justify-center p-8">
-      <div className="grid">
-        <div className="bg-white p-6 shadow-lg rounded-lg">
-          <h2 className="text-lg font-bold">Create a New Project</h2>
-          <p>Organize your tasks in a dedicated project.</p>
-          {user ? (
-            <form onSubmit={handleSubmit}>
-              <div className="mt-4">
-                <input
-                  type="text"
-                  name="title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Project Title"
-                  className="w-full p-2 border rounded mb-2"
-                />
-                <textarea
-                  name="description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Project Description"
-                  className="w-full p-2 border rounded mb-4"
-                />
-                <button
-                  type="submit"
-                  className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                >
-                  Create Project
-                </button>
-              </div>
-            </form>
-          ) : (
-            <p className="mt-4 text-red-500">Login to create a project.</p>
-          )}
-        </div>
-      </div>
-
-      {/* Display the newly created projects */}
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {projects.length > 0 ? (
-          projects.map((project) => (
-            <ProjectCard key={project._id} project={project} />
-          ))
+    <div className="min-h-screen bg-gradient-to-b ">
+      {/* Create Project Section */}
+      <section className="bg-blue-100 shadow-lg rounded-lg max-w-4xl mx-auto mt-16 p-8 text-center">
+        <h2 className="text-3xl font-extrabold text-gray-800">Create a New Project</h2>
+        <p className="text-gray-600 text-sm mt-2 mb-6">
+          Start organizing your tasks with a brand-new project.
+        </p>
+        {user ? (
+          <form onSubmit={handleSubmit} className="space-y-4 mt-8">
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Project Title"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            />
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Project Description"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg shadow hover:from-blue-600 hover:to-blue-700 transition"
+            >
+              Create Project
+            </button>
+          </form>
         ) : (
-          <p>No projects found. Start by creating one!</p>
+          <p className="text-red-500 mt-4">Please log in to create a project.</p>
         )}
-      </div>
-    </div>
+        {error && <p className="text-red-500 mt-4">{error}</p>}
+      </section>
 
+      {/* Divider */}
+      <div className="my-16 w-full border-t border-gray-300"></div>
+
+      {/* Project Cards Section */}
+      <section className="max-w-7xl mx-auto px-4 lg:px-8 pb-16">
+        <h2 className="text-3xl font-extrabold text-gray-800 mb-8 text-center">
+          Your Projects
+        </h2>
+        {projects.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {projects.map((project) => (
+              <ProjectCard key={project._id} project={project} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-600 text-center">No projects found. Start by creating one!</p>
+        )}
+      </section>
+    </div>
   );
 };
 
