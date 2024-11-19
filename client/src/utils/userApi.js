@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/users';
+const API_URL = 'https://todo-project-1-4mvq.onrender.com/api/users';
 
 export const loginUser = async (credentials) => {
   const { data } = await axios.post(`${API_URL}/login`, credentials);

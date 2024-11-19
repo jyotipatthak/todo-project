@@ -1,6 +1,6 @@
 
 import axios from "axios";
-const API_URL = "http://localhost:5000/api"
+const API_URL = "https://todo-project-1-4mvq.onrender.com/api"
 
 
 const getAuthToken = () => {

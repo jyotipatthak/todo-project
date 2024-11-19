@@ -1,10 +1,10 @@
 
 # project-1
 
-**Summary:** 0 / 1 todos completed.
+**Summary:** 1 / 2 todos completed.
 
 ## Pending Todos
-- [ ] crypto-project
+- [ ] todo list
 
 ## Completed Todos
-
+- [x] crypto-project
